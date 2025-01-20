@@ -11,17 +11,14 @@ public class RigidBodyCharacterController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
     }
-    void Update()
-    {
-        movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * speed;//الحركة
 
-        if (Input.GetKeyDown(KeyCode.Space) && transform.position.y < 1.3f)//القفز
-        {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpPower, rb.linearVelocity.z);
-        }
-    }
     void FixedUpdate()
     {
+        movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * speed;//الحركة
+        if (Input.GetKeyDown(KeyCode.Space) && transform.position.y < 1.3f)//القفز
+        {
+            rb.AddForce (new Vector3(0,jumpPower,0), ForceMode.Impulse);
+        }
         rb.linearVelocity = new Vector3(movement.x, rb.linearVelocity.y, movement.z);
     }
 }
